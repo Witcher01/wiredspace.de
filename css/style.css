@@ -1,0 +1,17 @@
+header {
+	width: 200px;
+	position: fixed;
+	margin: 2px;
+}
+
+main {
+	position: absolute;
+	margin-left: 230px;
+}
+
+footer {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
