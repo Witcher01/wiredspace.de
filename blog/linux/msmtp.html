@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+		<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+		<link rel="shortcut icon" href="/images/favicon.ico" />
+
+		<title>Home</title>
+	</head>
+
+	<body>
+		<header>
+			<a href="index.html">Home</a>
+			<ul>
+				<li><a href="about.html">About</a></li>
+			</ul>
+
+			Services
+			<ul>
+				<li><a href="https://bin.wiredspace.de/">PrivateBin</a></li>
+			</ul>
+		</header>
+		<main>
+			<h1>msmtp</h1>
+
+			<p><code>msmtp</code> is a commandline smtp client that reads the message body from stdin.</p>
+
+			<h2>configuration</h2>
+
+			<p>
+				You need to first install <code>msmtp</code> with the package manager of your choice.<br />
+				After installing, create a confi file. <code>msmtp</code> looks for those in <code>$XDG_CONFIG_HOME&#47;msmtp</code>. The config file simply needs to be called <code>config</code>.<br />
+				Here&#39;s a sample configuration file which you can edit:
+				<pre>
+defaults
+auth on
+tls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile /home/{user}/.config/msmtp/msmtp.log
+
+account {account1}
+host {smtp hostname}
+port 465
+from {from field}
+user {smtp username}
+passwordeval "gpg --quiet --for-your-eyes-only --no-tty --decrypt $XDG_CONFIG_HOME/msmtp/.msmtp-{account1}.gpg"
+# only if your smtp server doesnt support STARTTLS
+#tls_starttls off
+
+# vim:filetype=msmtp
+				</pre>
+
+			The last line exists to make vim highlight the configuration file with the right syntax. Feel free to remove it if you want. Make sure you replace all your occurances of:
+				<ul>
+					<li><code>{user}</code> - the username you are logged in to on your computer
+					<li><code>{account1}</code> - a string you have to reference later to select that profile
+					<li><code>{smtp hostname}</code> - the hostname of your smtp server
+					<li><code>{smtp username}</code> - the username you log in with on the given smtp server
+				</ul>
+
+				<h3>usage</h3>
+
+				<p>
+				Using <code>msmtp</code> is very simple. Supply the body of the message via stdin, set a subject via the <code>-s</code> flag, set the account to use via the <code>-a</code> flag and send it to the email supplied at the very end.
+				</p>
+		</main>
+		<footer>
+			<a href="privacy.html">Privacy Policy</a>
+		</footer>
+	</body>
+</html>

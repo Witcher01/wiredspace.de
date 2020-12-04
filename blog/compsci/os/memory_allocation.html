@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+		<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+		<link rel="shortcut icon" href="/images/favicon.ico" />
+
+		<title>Home</title>
+	</head>
+
+	<body>
+		<header>
+			<a href="index.html">Home</a>
+			<ul>
+				<li><a href="about.html">About</a></li>
+			</ul>
+
+			Services
+			<ul>
+				<li><a href="https://bin.wiredspace.de/">PrivateBin</a></li>
+			</ul>
+		</header>
+		<main>
+			<h1>memory allocation</h1>
+
+			<h2>Basics</h2>
+
+			<p>
+				In order to use the heap, memory has to be allocated. In the programming language <em>C</em>, this memory is usually allocated via a call to a library function. As explained in the book
+				<a href="http://ostep.org/"><em>Operating Systems: Three Easy Pieces</em></a>, managing this space efficiently is very important, but also very hard. A good memory allocator is supposed to be fast and as space-efficient as
+				possible (avoid fragmentation).
+			</p>
+
+			<h3>Strategies</h3>
+
+			<p>
+				The following strategies are all based on the concept of a <em>free-list</em>. The nodes of such a list are pointers to free segments. Usually every segment is preceeded by a <em>header</em>, which, among other things,
+				contains the size of the following block of space and if it is used or not. In the following strategies I will not talk about the concept of a header to focus on how the strategy works&#8230; There are several basic
+				strategies found in the previously named book. These are as follows:
+			</p>
+
+			<h4>Best fit</h4>
+
+			<p>
+				The <em>best fit</em> strategy goes through the free-list and searches for a block of space that is exactly the size of the requested size or bigger. This strategy can very likely end up searching through the whole
+				free-list, if there is no free block that is exactly as big as the requested size. But, if the free-list is being searched and a block of the exact same size as requested is found, the search can be interrupted as there will
+				not be another block that will fit better.
+			</p>
+
+			<h4>Worst fit</h4>
+
+			<p>
+				Unlike <em>best fit</em>, <em>worst fit</em> searches for the <em>biggest</em> block that can satisfy the request. The motivation behind this allocation strategy is that <em>best fit</em> could potentially have really bad
+				fragmentation if the requested size is just a bit smaller then the found free block (e.g. the user requests 5 bytes and a 6 byte big block is found: the block will be split into a 5 byte big block, which is returned to the
+				user, and a 1 byte big block, which, most likely, wont be allocated). In order to avoid that fragmentation, <em>worst fit</em> just searches for the biggest block so that there wont be a small block left after splitting it
+				to satisfy the request for a specific size.
+			</p>
+
+			<h4>First fit</h4>
+
+			<p>
+				In contrast to <em>best fit</em> and <em>worst fit</em>, <em>first fit</em> does not try to search the whole list for a block that meets specific requirements, but instead returns the first free block that satisfies the size
+				requested by the user. This strategy is faster than the previous two, as it doesnt have to search through the whole list every time an allocation is requested.
+			</p>
+
+			<h4>Next fit</h4>
+
+			<p>
+				Like <em>first fit</em>, <em>next fit</em> returns the first free block that satisfies the requested size. There is a single difference here: instead of searching through the list for the first free block from the beginning,
+				it remembers the last returned block and starts searching from there.
+			</p>
+		</main>
+		<footer>
+			<a href="privacy.html">Privacy Policy</a>
+		</footer>
+	</body>
+</html>

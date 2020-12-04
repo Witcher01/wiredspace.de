@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+		<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+		<link rel="shortcut icon" href="/images/favicon.ico" />
+
+		<title>Home</title>
+	</head>
+
+	<body>
+		<header>
+			<a href="index.html">Home</a>
+			<ul>
+				<li><a href="about.html">About</a></li>
+			</ul>
+
+			Services
+			<ul>
+				<li><a href="https://bin.wiredspace.de/">PrivateBin</a></li>
+			</ul>
+		</header>
+		<main>
+			<h1>arch-config</h1>
+
+			<h2>Mirror List</h2>
+
+			<p>Location: <code>&#47;etc&#47;pacman.d&#47;mirrorlist</code></p>
+
+			<p>Select the mirror(s) you want to use for the package manager <code>pacman</code>. Delete every other entry or mark it as a comment to ensure that <code>pacman</code> is using the right mirror.</p>
+
+			<p>You can also install vim (if not already installed on the live disc) with pacman by typing <code>pacman -Sy vim</code> for more convenient text editing.</p>
+
+			<h2>UEFI or BIOS?</h2>
+
+			<p>
+				To check if your system is using EFI, run the command:
+				<pre>
+ls &#47;sys&#47;firmware&#47;efi
+				</pre>
+				If the directory exists and contains files then your system is using EFI. If that is not the case you are probably using BIOS and this cheatsheet will probably not work to install Arch Linux on your machine.
+			</p>
+
+			<h2>Partitioning</h2>
+
+			<p><strong>Attention: This process will wipe your entire harddrive!</strong></p>
+
+			<h3>Listing current drives and partitions</h3>
+
+			<p>
+				To check which drives are installed on the system and what partitions there are these commands might be helpful:
+				<ul>
+					<li><code>lsblk</code></li>
+					<li><code>cat &#47;proc&#47;partitions</code></li>
+					<li><code>gdisk -l</code></li>
+				</ul>
+			</p>
+
+			<h3>Partitioning your drives</h3>
+
+			<p>
+				<strong>If your system is using EFI use gdisk for better compatibility</strong><br>
+				Make sure to memorize the partition numbers and which partition is for what purpose.
+			</p>
+
+			<p>
+				To partition your drives (your standard harddrive <strong>should</strong> be &#47;dev&#47;sda), utilize the command <code>gdisk</code>.<br>
+				<code>gdisk &#47;dev&#47;sdx</code> where <code>x</code> is the driver letter (e.g. &#8220;a&#8221;)
+			</p>
+
+			<h4>Clear the parition table</h4>
+
+			<p>
+				To clear the partition table type <code>o</code> in gdisk<br>
+				<pre>Command (? for help): o</pre>
+			</p>
+
+			<h4>Create a new partition</h4>
+
+			<p>
+				Create a new partition by typing <code>n</code><br>
+				<pre>Command (? for help): n</pre>
+			</p>
+
+			<p>
+				You will be asked, what number your partition should have. This will be displayed as <code>&#47;dev&#47;sdaxY</code> where <code>x</code> is the driver letter and <code>Y</code> is the partition number.<br>
+				After this you will be asked about the <em>First Sector</em> and the <em>Last sector</em> of the disk. For the <em>First Sector</em> you choose the default value.<br>
+				For the <em>Last Sector</em> you can either specify a number (e.g. 4196) or how big the sector&#47;partition should be. This is done by typing a <code>+</code> followed by the size of the sector. For <code>gdisk</code> to
+				know if you are using megabytes, gigabytes or something else, you need to specify this by a letter at the end of the line (e.g. <code>M</code> for <code>Megabytes</code> or <code>G</code> for <code>Gigabytes</code>).
+			</p>
+
+			<p>
+				<code>gdisk</code> now asks for the type of your partition. This is where you want to be specific.<br>
+				If you do not have a <em>EFI Partition</em> (e.g. when you cleared your partition table) you have to create one. If your drive already has an <em>EFI Partition</em> then you can skip this step.<br>
+				The <em>EFI Partition</em> should be 512 <em>Megabytes</em> big and has a hexcode of <code>EF00</code>.
+			</p>
+
+			<p>
+				You need at least one other partition for the filesystem to go.
+				<ul>
+					<li>Create a new partition by typing <code>n</code> in the prompt</li>
+					<li>Select the size of your partition (depending on if you want to add a seperate <code>&#47;home</code> or <code>swap</code> partition)</li>
+					<li>The standard linux filesystem has a hexcode of <code>8300</code></li>
+				</ul
+			</p>
+
+			<p>If you want to add a seperate <code>&#47;home</code> partition to your drive, do the same as with the <code>&#47;</code> filesystem.</p>
+
+			<p>
+				To create a <code>swap</code> partition on your drive do the following:
+				<ul>
+					<li>Create a new partition by typing <code>n</code> in the prompt</li>
+					<li>Select the size of your partition (a <em>swap</em> partition should be at least as big as your <em>RAM</em>, the recommended size is 2x of your <em>RAM</em>)</li>
+					<li>The hexcode of <em>swap</em> is <code>8200</code></li>
+				</ul>
+			</p>
+
+			<p>
+				At last write the changes to the disk with <code>w</code>.<br>
+				<strong>Make sure to check the drive with <code>gdisk -l &#47;dev&#47;sdx</code>!</strong>
+			</p>
+
+			<h4>Formatting the partitions</h4>
+
+			<p>
+				The <code>mkfs</code> command allows you to format a partition to a desired filesystem.<br>
+				The <em>EFI Partition</em> uses <code>vfat</code>. To format it with <code>vfat</code> use <code>mkfs.vfat &#47;dev&#47;sdxY</code>.<br>
+				The linux filesystem uses <code>ext4</code>, so your <code>\</code> and <code>\home</code> partitions should be formatted with <code>mkfs.ext4 &#47;dev&#47;sdxY</code>.
+			</p>
+
+			<p>
+				To make your <em>swap Partition</em> one, use the <code>mkswap</code> command.<br>
+				To enable your <em>swap Partition</em>, use the <code>swapon &#47;dev&#47;sdxY</code> command. To disable a <em>swap Partition</em>, use the <code>swapoff &#47;dev&#47;sdxY</code> command.
+			</p>
+
+			<h2>Installing Arch Linux</h2>
+
+			<h3>Mounting</h3>
+
+			<p>
+				To mount a partition, utilize the <code>mount &#47;dev&#47;sdxY &#47;mount&#47;point</code> command.<br>
+				To unmount a partition, utilize the <code>umount &#47;dev&#47;sdxY</code> command.
+			</p>
+
+			<h4><code>&#47;</code></h4>
+
+			<p>
+				For convenience we mount the partition where the <em>root</em> filesystem should go to <code>&#47;mnt</code>.<br>
+				Make sure you select the right partition!<br>
+				<code>mount &#47;dev&#47;sdxY &#47;mnt</code>
+			</p>
+
+			<h4><code>&#47;home</code></h4>
+
+			<p>
+				If you have a seperate partition for your <code>&#47;home</code> directorys, create a directory in the already mounted <em>root</em> filesystem. This directory <strong>NEEDS</strong> to be called <code>home</code>.<br>
+				<code>mkdir &#47;mn&#47;home</code>
+			</p>
+
+			<p>
+				After the directory is created, mount the partition where your <code>&#47;home</code> directorys should go to the newly created folder.<br>
+				<code>mount &#47;dev&#47;sdxY &#47;mnt&#47;home</code>
+			</p>
+
+			<h4><code>&#47;boot</code></h4>
+
+			<p>
+				The <em>EFI Partition</em> goes here.<br>
+				First create a directory in the mounted <em>root</em> filesystem called <code>boot</code> to mount the <em>EFI Partition</em>.<br>
+				<code>mkdir &#47;mnt&#47;boot</code>
+			</p>
+
+			<p>
+				When the directory is created, mount the <em>EFI Partition</em> to the newly created folder.<br>
+				<code>mount &#47;dev&#47;sdxY &#47;mnt&#47;boot</code>
+			</p>
+
+			<h3><code>pacstrap</code></h3>
+
+			<p>To install the filesystem for Arch Linux, we use a tool called <code>pacstrap</code> which is included in the live disc.</p>
+
+			<p>
+				Assuming you mounted the partition where your <em>root</em> filesystem should go is <code>&#47;mnt</code>, do the following:<br>
+				<code>pacstrap &#47;mnt</code><br>
+				This will install all necessary files to that partition.
+			</p>
+
+			<h2><code>systemd-bootd</code></h2>
+
+			<p><code>bootctl</code> is part of the systemd suite.</p>
+
+			<p>
+				To configure <code>bootctl</code> we have to enter the newly installed Arch Linux system. This is done via <code>arch-chroot</code>.<br>
+				<code>arch-chroot &#47;mnt</code>
+			</p>
+
+			<p>When you are in your Arch system, use the command <code>bootctl install</code> to install <code>bootctl</code>. It should detect everything it needs by itself.</p>
+
+			<p>
+				When this is done, check your <code>&#47;boot</code> directory for the necessary files.<br>
+				If these are present, move on to the next step.
+			</p>
+
+			<p>
+				Now you have configure the <code>loader.conf</code> found in <code>&#47;boot&#47;loader</code>.<br>
+				<strong>Note: The Arch Linux installation you have entered does not contain vim as an editor. You have to manually download it using pacman -S vim</strong>.<br>
+				First, empty <code>loader.conf</code>. For now you can copy this configuration file:<br>
+				<pre>
+default arch
+timeout 4
+editor 0
+				</pre>
+			</p>
+
+			<p>
+				Next you need to configure <code>arch.conf</code> located in <code>&#47;boot&#47;loader&#47;entries</code>.<br>
+				Again, for now copy this configuration file:
+				<pre>
+title Archlinux
+linux &#47;vmlinuz-linux
+initrd &#47;intel-ucode.img
+initrd &#47;initramfs-linux.img
+options root=PARTUUID="YOUR DRIVE UUID" rw
+				</pre>
+				The first <code>initrd</code> line is optional but should be used when using an intel CPU. This will ensure your CPU will get updated before starting the kernel.<br>
+				You can install the package by issuing the command <code>sudo pacman -S intel-ucode</code>.<br>
+				To figure out what <em>PARTUUID</em> your drive has, type in this command:<br>
+				<pre>
+blkid -s PARTUUID -o value &#47;dev&#47;sdxY
+				</pre>
+			</p>
+
+			<h2>Configuring Arch Linux</h2>
+
+			<h3>fstab</h3>
+
+			<p><code>fstab</code> allows your PC to mount partitions on boot.</p>
+
+			<p>
+				Generate a <em>fstab</em> file (without arch-chroot into the system):<br>
+				<pre>
+genfstab -U &#47;mnt &#62;&#62; &#47;mnt&#47;etc&#47;fstab
+				</pre>
+			</p>
+
+			<p>For fstab configuration, see <a href="https://wiki.archlinux.org/index.php/Fstab">fstab</a>.</p>
+
+			<h3>Time zone</h3>
+
+			<p>
+				Set the time zone:<br>
+				<pre>
+ln -sf &#47;usr&#47;share&#47;zoneinfo&#47;Region&#47;City &#47;etc&#47;localtime
+				</pre>
+			</p>
+
+			<p>
+				Run <code>hwclock</code> to generate <code>&#47;etc&#47;adjtime</code>:<br>
+				<pre>
+hwclock --systohc
+				</pre>
+				This command assumes the hardware clock to be set to <em>UTC</em>.
+			</p>
+
+			<h3>Locale</h3>
+
+			<p>
+				Uncomment <code>en_US.UTF-8 UTF-8</code> and other needed localizations in <code>&#47;etc&#47;locale.gen</code>, and generate them with:
+				<pre>
+locale-gen
+				</pre>
+			</p>
+
+			<p>
+				Set the <strong>LANG</strong> variable in <code>&#47;etc&#47;locale.conf</code> accordingly, for example:<br>
+				<pre>
+LAND=en_US.UTF-8
+				</pre>
+			</p>
+
+			<p>
+				If you set the keyboard layout, make the changes persistent in <code>&#47;etc&#47;vconsole.conf</code> (does not keep the keyboard layout for <em>WM</em>&#39;s or <em>DE</em>&#39;s):
+				<pre>
+KEYMAP=de-latin1
+				</pre>
+			</p>
+
+			<h3>Hostname</h3>
+
+			<p>
+				Create <code>&#47;etc&#47;hostname</code>:
+				<pre>
+myhostname
+				</pre>
+			</p>
+
+			<p>
+				Add matching entries to <code>&#47;etc&#47;hosts</code>:<br>
+				<pre>
+127.0.0.1 localhost
+::1 localhost
+127.0.1.1 myhostname.localdomain myhostname
+				</pre>
+			</p>
+
+			<h3>Network configuration</h3>
+
+			<p>
+				Here: <a href="https://wiki.archlinux.org/index.php/Netctl"><em>netctl</em></a> Alternatives: <em>wpa_supplicant</em>
+			</p>
+
+			<p>Copy the example file from <code>&#47;etc&#47;netctl&#47;examples&#47;wireless-wpa</code> to <code>&#47;etc&#47;netctl&#47;mywirelessnetwork</code> and edit the file accordingly.</p>
+
+			<h3>Root password</h3>
+
+			<p>
+				Set the root password:
+				<pre>
+passwd
+				</pre>
+			</p>
+
+			<p>The system is now ready for boot.</p>
+
+			<p>
+				Locking the root account:<br>
+				<pre>
+passwd -l root
+				</pre>
+			</p>
+
+			<p>
+				Unlocking the root account:<br>
+				<pre>
+sudo passwd -u root
+				</pre>
+			</p>
+
+			<h3>User management</h3>
+
+			<p>
+				Add a new user:<br>
+				<pre>
+useradd -m -g initial_group -G additional_groups -s login_shell username
+				</pre>
+				For later convenience with <code>sudo</code> and <code>xbacklight</code> we set the <em>initial_group</em> to <code>wheel</code> and the <em>additional_groups</em> to <code>video</code>. Shells used can be
+				<pre>
+&#47;bin&#47;bash
+				</pre>
+				or
+				<pre>
+&#47;usr&#47;bin&#47;zsh
+				</pre>
+			</p>
+
+			<h3>Package manager</h3>
+
+			<p>
+				Here: <a href="https://github.com/Jguer/yay"><em>yay</em></a>
+			</p>
+
+			<p>
+				Alternatives: <a href="https://archlinux.fr/yaourt-en"><em>yaourt</em></a>, <a href="https://github.com/trizen/trizen"><em>trizen</em></a>
+			</p>
+
+			<h3>Privilege escalation</h3>
+
+			<p>
+				To temporary grant root privileges to a user, use <code>sudo</code>:<br>
+				<pre>
+pacman -S sudo
+				</pre>
+			</p>
+
+			<p>
+				To configure sudo to allow the just added user to escalate privileges, we uncommented a line from <code>&#47;etc&#47;sudoers</code>:<br>
+				<pre>
+%wheel ALL=(ALL) ALL
+				</pre>
+			</p>
+
+			<h3>Display server</h3>
+
+			<p>
+				Here: <a href="https://wiki.archlinux.org/index.php/Xorg"><em>Xorg</em></a>
+			</p>
+
+			<p>
+				Alternative: <a href="https://wiki.archlinux.org/index.php/Wayland"><em>Wayland</em></a>
+			</p>
+
+			<p>
+				To install <em>Xorg</em>:<br>
+				<pre>
+sudo pacman -S xorg-server
+				</pre>
+			</p>
+
+			<h3>Graphics driver</h3>
+
+			<p>
+				Here: <a href="https://wiki.archlinux.org/index.php/Nouveau"><em>Noveau</em></a>
+			</p>
+
+			<p>
+				Alternatives: <a href="https://wiki.archlinux.org/index.php/NVIDIA"><em>Nvidia</em></a>, <a href="https://wiki.archlinux.org/index.php/AMD_Catalyst"><em>AMD</em></a>
+			</p>
+
+			<p>
+				To install the <em>noveau</em> drivers:<br>
+				<pre>
+sudo pacman -S mesa
+				</pre>
+				The <em>noveau</em> drivers should be loaded on default.
+			</p>
+
+			<p>
+				For <em>Nvidia</em> drivers, you first have to determine what graphics card you use by issuing the command <code>lspci -k | grep -A 2 -E "(VGA|3D)"</code>.<br>
+				&#8230; follow the guide linked above
+			</p>
+
+			<p><strong>NEEDS EDITING</strong></p>
+
+			<h3>Window manager</h3>
+
+			<p>
+				Here: <a href="https://github.com/Airblader/i3"><em>i3-gaps</em></a>
+			</p>
+
+			<p>
+				Alternatives: <a href="https://wiki.archlinux.org/index.php/I3"><em>i3</em></a>, <a href="https://wiki.archlinux.org/index.php/Bspwm"><em>bspwm</em></a>,
+				<a href="https://wiki.archlinux.org/index.php/Awesome"><em>Awesome</em></a>, <a href="https://wiki.archlinux.org/index.php/Herbstluftwm"><em>HerbstluftWM</em></a>
+			</p>
+
+			<p>
+				Installing <em>i3-gaps</em>:<br>
+				<code>yay -S i3-gaps</code>
+			</p>
+
+			<h3>Sound</h3>
+
+			<p>
+				Here: <a href="https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture"><em>ALSA</em></a>, <a href="https://wiki.archlinux.org/index.php/PulseAudio"><em>PulseAudio</em></a>
+			</p>
+
+			<p>
+				<em>ALSA</em> is already installed on Linux.<br>
+				To install <em>PulseAudio</em>:<br>
+				<code>sudo pacman -S pulseaudio pulseaudio-alsa</code><br>
+				To install bluetooth support and an equalizer, use <code>sudo pacman -S pulseaudio-bluetooth pulseaudio-equalizer</code> respectively.
+			</p>
+
+			<h3>Time synchronisation</h3>
+
+			<p>
+				Here: <a href="https://wiki.archlinux.org/index.php/Systemd-timesyncd"><em>systemd-timesyncd</em></a>
+			</p>
+
+			<p>
+				<em>systemd-timesyncd</em> is part of the <em>systemd</em> suite, which is installed by default.<br>
+				To enable <em>systemd-timesyncd</em>:<br>
+				<code>timedatectl set-ntp true</code>
+			</p>
+
+			<h3>DNS Security</h3>
+
+			<p>
+				Here: <a href="https://wiki.archlinux.org/index.php/DNSSEC"><em>DNSSEC</em></a>, <a href="https://wiki.archlinux.org/index.php/DNSCrypt"><em>DNSCrypt</em></a>
+			</p>
+
+			<p>
+				To install <em>DNSSEC</em> and <em>DNSCrypt</em>:
+				<pre>
+sudo pacman -S ldns
+				</pre>
+				<pre>
+yay -S dnscrypt-proxy-go
+				</pre>
+			</p>
+
+			<p><strong>NEEDS EDITING</strong></p>
+
+			<h3>Firewall</h3>
+
+			<p>
+				Here: <a href="https://wiki.archlinux.org/index.php/Uncomplicated_Firewall"><em>Ufw</em></a>
+			</p>
+
+			<p>
+				To install <em>Ufw</em>:<br>
+				<pre>
+sudo pacman -S ufw
+				</pre>
+			</p>
+
+			<p><strong>NEEDS EDITING</strong></p>
+
+			<h3>MouseAcceleration</h3>
+
+			<p>Here: with <em>Xorg</em></p>
+
+			<p>
+				To disable mouse acceleration, follow <a href="https://wiki.archlinux.org/index.php/Mouse_acceleration#Disabling_mouse_acceleration"><em>this</em></a> guide.
+			</p>
+
+			<h3>Improving performance</h3>
+
+			<p>
+				<a href="https://wiki.archlinux.org/index.php/Improving_performance"><em>Improving performance</em></a>
+			</p>
+
+			<p><strong>NEEDS EDITING</strong></p>
+
+			<h3>Solid State Drive</h3>
+
+			<p>
+				<a href="https://wiki.archlinux.org/index.php/Solid_State_Drive"><em>SSD</em></a>
+			</p>
+
+			<p><strong>NEEDS EDITING</strong></p>
+
+			<h3>Fonts</h3>
+
+			<p>To install fonts, use <code>pacman</code> or the <em>AUR</em>.</p>
+
+			<p>
+				To refresh the font-cache:<br>
+				<pre>
+fc-cache -fv
+				</pre>
+				To list all fonts:<br>
+				<pre>
+fc-list
+				</pre>
+			</p>
+
+			<h3>Monitor brightness</h3>
+
+			<p>
+				By default, non-root users are not allowed to change the brightness of the screen.<br>
+				To change this, we add the user to the <em>video</em> group and allow this group to modify the file for the brightness.<br>
+				The file is located in <code>&#47;etc&#47;udev&#47;rules.d&#47;90-backlight.rules</code>:<br>
+				<code>SUBSYSTEM=="backlight", ACTION=="add", RUN+="&#47;bin&#47;chgrp video %S%p&#47;brightness", RUN+="&#47;bin&#47;chmod g+w %S%p&#47;brightness"</code>
+				Another option is using <a href="https://github.com/Hummer12007/brightnessctl/"><em>brightnessctl</em></a> if xbacklight is not working. If all else fails, there is still the option to manually change the brightness (or put
+				it in a script&#47;write a program) with, for example: 
+				<pre>
+printf "&#60;value&#62;\n" &#62; &#47;sys&#47;class&#47;backlight&#47;intel_backlight&#47;brightness
+				</pre>
+				(path to <em>brightness</em> file might be different for you).
+			</p>
+
+			<h3>Dipslay Manager</h3>
+
+			<p>Here: <em>None</em></p>
+
+			<p>
+				Alternatives: <a href="https://wiki.archlinux.org/index.php/LXDM"><em>lxdm</em></a>, <a href="https://wiki.archlinux.org/index.php/LightDM"><em>LightDM</em></a>
+			</p>
+
+			<p>
+				To install <em>lxdm</em> or <em>LightDM</em>:<br>
+				<pre>
+sudo pacman -S lxdm
+				</pre>
+				<pre>
+sudo pacman -S lightdm
+				</pre>
+			</p>
+
+			<p>
+				To enable a display manager on boot:<br>
+				<code>sudo systemctl enable displaymanager.service</code>
+			</p>
+
+			<p>
+				If you do not want to use a Display Manager, you can choose to execute <code>startx</code> on login in a terminal.<br>
+				First, make sure your <code>~&#47;.xserverrc</code> is properly configured:<br>
+				<pre>
+#!/bin/sh
+
+exec &#47;usr&#47;bin&#47;Xorg -nolisten tcp &#8220;$@&#8221; vt$XDG_VTNR
+				</pre>
+				Second, if you are using bash add the following lines to your <code>~&#47;.bash_profile</code> or if you are using zsh add them to your <code>~&#47;.zprofile</code>:
+				<pre>
+if [[ ! $DISPLAY &#38;&#38; $XDGVTNR -eq 1 ]]; then
+exec startx
+fi
+				</pre>
+				<br>
+				If <code>startx</code> does not start your window manager&#47;desktop environment, look for it with the help of the <code>which</code> command and pass the given path as a parameter of <code>startx</code>
+				your <code>~&#47;.bashrc</code> or <code>~&#47;.zprofile`</code>.
+			</p>
+
+			<p>
+				If you want to be automatically logged in on boot, edit the file <code>&#47;etc&#47;systemd&#47;system&#47;getty@tty1.service.d&#47;override.conf</code>:<br>
+				<pre>
+[Service] ExecStart= ExecStart=-&#47;usr&#47;bin&#47;agetty --autologin username --noclear %I $TERM
+				</pre>
+			</p>
+		</main>
+		<footer>
+			<a href="privacy.html">Privacy Policy</a>
+		</footer>
+	</body>
+</html>

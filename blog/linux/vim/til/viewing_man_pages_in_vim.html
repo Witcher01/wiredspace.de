@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+		<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+		<link rel="shortcut icon" href="/images/favicon.ico" />
+
+		<title>Home</title>
+	</head>
+
+	<body>
+		<header>
+			<a href="index.html">Home</a>
+			<ul>
+				<li><a href="about.html">About</a></li>
+			</ul>
+
+			Services
+			<ul>
+				<li><a href="https://bin.wiredspace.de/">PrivateBin</a></li>
+			</ul>
+		</header>
+		<main>
+			<h1>viewing man pages in vim</h1>
+
+			<p>
+				Vim has a &#8220;built-in&#8221; functionality of displaying man pages. To activate this, add this to your <code>.vimrc</code>
+				<code>
+					runtime ftplugin&#47;man.vim
+				</code>
+				This will load a standard plugin shipped with vim. You are now able to view the man page of a command with the vim command <code>:Man</code>. For example, if you want to know what the c function <code>sbrk</code> does, type
+				<code>
+					:Man 2 sbrk
+				</code>
+			</p>
+
+			<p>If the function is already in the buffer, put the cursor on the function and hit <code>K</code> (as in <code>Shift-k</code>) to view the manual page of it. This only works on functions without hyphens.</p>
+		</main>
+		<footer>
+			<a href="privacy.html">Privacy Policy</a>
+		</footer>
+	</body>
+</html>

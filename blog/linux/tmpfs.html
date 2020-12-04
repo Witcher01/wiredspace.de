@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+		<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+		<link rel="shortcut icon" href="/images/favicon.ico" />
+
+		<title>Home</title>
+	</head>
+
+	<body>
+		<header>
+			<a href="index.html">Home</a>
+			<ul>
+				<li><a href="about.html">About</a></li>
+			</ul>
+
+			Services
+			<ul>
+				<li><a href="https://bin.wiredspace.de/">PrivateBin</a></li>
+			</ul>
+		</header>
+		<main>
+			<h1>tmpfs</h1>
+
+			<h2>Description</h2>
+
+			<p>
+				<a href="https://wiki.archlinux.org/index.php/tmpfs">tmpfs</a> is a temporary filesystem on linux that purely resides in RAM. It can be used to significantly speed up file access or reduce read&#47;write operations on a hard
+				drive. Arch Linux by default has <code>&#47;tmp</code> mounted as a tmpfs.
+			</p>
+
+			<h2>Usage</h2>
+
+			<p>To mount a tmpfs, consult the manual page <em>tmpfs(5)</em>. Some simple things are:
+			<ul>
+				<li><code>mount -t tmpfs -o size=10M tmpfs &#47;mnt&#47;mytmpfs</code></li>
+			</ul>
+
+			Since tmpfs is mounted via selecting a type from mount, all mount options apply. See <em>mount(8)</em>.</p>
+		</main>
+		<footer>
+			<a href="privacy.html">Privacy Policy</a>
+		</footer>
+	</body>
+</html>
