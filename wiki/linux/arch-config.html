@@ -586,7 +586,7 @@ exec &#47;usr&#47;bin&#47;Xorg -nolisten tcp &#8220;$@&#8221; vt$XDG_VTNR
 				Second, if you are using bash add the following lines to your <code>~&#47;.bash_profile</code> or if you are using zsh add them to your <code>~&#47;.zprofile</code>:
 				<pre>
 if [[ ! $DISPLAY &#38;&#38; $XDGVTNR -eq 1 ]]; then
-exec startx
+	exec startx
 fi
 				</pre>
 				<br>
@@ -597,7 +597,9 @@ fi
 			<p>
 				If you want to be automatically logged in on boot, edit the file <code>&#47;etc&#47;systemd&#47;system&#47;getty@tty1.service.d&#47;override.conf</code>:<br>
 				<pre>
-[Service] ExecStart= ExecStart=-&#47;usr&#47;bin&#47;agetty --autologin username --noclear %I $TERM
+[Service]
+ExecStart=
+ExecStart=-&#47;usr&#47;bin&#47;agetty --autologin username --noclear %I $TERM
 				</pre>
 			</p>
 		</main>
