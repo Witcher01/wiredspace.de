@@ -1,0 +1,19 @@
+TITLE: Static Site Generation with blogc
+DATE: 2020-12-21 15:05:00
+---
+# Static Site Generation with blogc
+## Introduction
+
+Up until now I've been working on my sites in pure HTML; the only tool I used had been [ssg](https://www.romanzolotarev.com/ssg.html) to convert the little ["wiki"](https://witcher01.github.io/) I put op on GitHub to HTML and use it on my website.  
+Creating a HTML file every time I wanted to post something on my website is not a viable alternative, though, which is why I was looking for an option to make my life easier. I decided to ask people on the webring thread on [lainchan](https://lainchan.org/) for advice on how to set up a proper workflow for web development, as I am completely new to this.  
+The nice guy from [concealed.world](https://concealed.world/) helped me get some ideas, which ultimately led me to [_blogc_](https://blogc.rgm.io/), the static site generator which I'm going to talk about here.
+
+## Why I chose blogc
+
+Blogc is simple yet powerful. On their website they state it should be used with a tool like `make`. It's not supposed to be a blogging engine but a compiler.  
+I like this approach, as I am a fan of C (programming language). To be perfectly honest, I don't have all that much knowledge about `make`, but I want to learn, and this is part of the reason I'm making this website.
+
+## Starting out
+
+To start, I downloaded the test repo they have up on GitHub (https://github.com/blogc/blogc-example) so that I don't have to figure out _everything_ by myself, as this could also be seen as a piece of documentation.  
+From there, I started changing my own `template.html` I had to function as a blogc template. If you want to follow this a bit, have a look at [my repo](https://github.com/Witcher01/wiredspace.de) and compare it with the example repo blogc provides.

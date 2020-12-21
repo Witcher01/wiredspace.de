@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link rel="stylesheet" href="{{ BASE_URL }}/assets/style.css" type="text/css" media="screen" charset="utf-8">
+
+		<link rel="shortcut icon" href="{{ BASE_URL }}/images/favicon.ico">
+
+		<title>
+			{{ SITE_TITLE }}{% block entry %}{% ifdef TITLE %} - {{ TITLE }}{% endif %}{% endblock %}
+		</title>
+	</head>
+
+	<body>
+		<header>
+			<nav>
+				<ul id="navigation-list">
+					<li><a href="{{ BASE_URL }}/index.html">Home</a></li>
+					<li><a href="{{ BASE_URL }}/blog/blogc.html">Blog</a></li>
+					<li><a href="{{ BASE_URL }}/wiki/index.html">Wiki</a></li>
+					<li><a href="https://bin.wiredspace.de/" target="_blank">PrivateBin</a></li>
+					<li><a href="{{ BASE_URL }}/about.html">About</a></li>
+					<li><a href="https://concealed.world/Other/lainchanwebring.php">Webring</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<noscript>
+				Welcome, human!
+			</noscript>
+			{% block entry %}
+			{{CONTENT}}
+			{% endblock %}
+			{% block listing %}
+			<article>
+				{{CONTENT}}
+			</article>
+			{% endblock %}
+		</main>
+
+		<footer>
+			<a href="{{ BASE_URL }}/privacy.html">Privacy Policy</a>
+		</footer>
+	</body>
+</html>
