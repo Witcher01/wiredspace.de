@@ -17,6 +17,7 @@ WIKI_POSTS = \
 	linux/eclim \
 	linux/msmtp \
 	linux/offlineimap \
+	linux/mbsync \
 	linux/tmpfs \
 	linux/vim/plugins/snipmate \
 	linux/vim/plugins/VimPlug \

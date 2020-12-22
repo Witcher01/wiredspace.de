@@ -14,6 +14,7 @@ This website will work without JavaScript, so feel free to disable it. I'm also 
 - [arch-config](linux/arch-config.html) - my arch linux installation setup
 - [eclim](linux/eclim.html) - eclim, a headless eclipse instance for vim
 - [offlineimap](linux/offlineimap.html) - how my imap syncing setup works
+- [mbsync](linux/mbsync.html) - actively developed alternative to offlineimap
 - [msmtp](linux/msmtp.html) - commandline smtp client
 - [neomutt]() - coming soon, hopefully
 - [tmpfs](linux/tmpfs.html) - a bit about tmpfs
