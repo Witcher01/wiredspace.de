@@ -24,4 +24,4 @@ I host other services, too:
 - [PrivateBin](https://bin.wiredspace.de/)
 
 # Notes
-Feel free to contact me at [witcher01@posteo.net](mailto:witcher01@posteo.net?subject=Feedback/Concerns) if you have any concerns about this website or the services I host. I will reply as soon as possible.
+Feel free to contact me at [witcher@memeware.net](mailto:witcher@memeware.net?subject=Feedback/Concerns) if you have any concerns about this website or the services I host. I will reply as soon as possible.
