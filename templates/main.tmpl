@@ -18,7 +18,7 @@
 			<nav>
 				<ul id="navigation-list">
 					<li><a href="{{ BASE_URL }}/index.html">Home</a></li>
-					<li><a href="{{ BASE_URL }}/blog/blogc.html">Blog</a></li>
+					<li><a href="{{ BASE_URL }}/blog/page/1/">Blog</a></li>
 					<li><a href="{{ BASE_URL }}/wiki/index.html">Wiki</a></li>
 					<li><a href="https://bin.wiredspace.de/" target="_blank">PrivateBin</a></li>
 					<li><a href="{{ BASE_URL }}/about.html">About</a></li>
@@ -31,13 +31,31 @@
 			<noscript>
 				Welcome, human!
 			</noscript>
-			{% block entry %}
-			{{CONTENT}}
+			{% block listing_empty %}
+			No blog entries available
 			{% endblock %}
 			{% block listing %}
 			<article>
+				<h3><a href="{{ BASE_URL }}/blog/post/{{FILENAME}}/">{{TITLE}}</a></h3>
 				{{CONTENT}}
 			</article>
+			{% endblock %}
+			{% block entry %}
+			{{CONTENT}}
+			{% endblock %}
+			{% block listing_once %}
+			<ul>
+				{% ifdef PREVIOUS_PAGE %}
+				<li>
+					<a href="/blog/page/{{PREVIOUS_PAGE}}/">&larr; Newer</a>
+				</li>
+				{% endif %}
+				{% ifdef NEXT_PAGE %}
+				<li>
+					<a href="/blog/page/{{NEXT_PAGE}}/">Older &rarr;</a>
+				</li>
+				{% endif %}
+			</ul>
 			{% endblock %}
 		</main>
 

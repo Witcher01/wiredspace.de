@@ -1,9 +1,11 @@
 # Content
 
 AUTHOR_NAME = "Witcher"
-AUTHOR_EMAIL = "witcher01@posteo.net"
+AUTHOR_EMAIL = "witcher@memeware.net"
 SITE_TITLE = "wiredspace.de"
 LOCALE = "en_GB.utf-8"
+
+POSTS_PER_PAGE = 1
 
 POSTS = \
 	blogc \
@@ -26,7 +28,6 @@ WIKI_POSTS = \
 
 PAGES = \
 	index \
-	blog \
 	about \
 	privacy \
 	$(NULL)
@@ -39,8 +40,12 @@ ASSETS = \
 # Arguments
 
 BLOGC ?= $(shell which blogc)
+BLOGC_RUNSERVER ?= $(shell which blogc-runserver 2> /dev/null)
 MKDIR ?= $(shell which mkdir)
 CP ?= $(shell which cp)
+
+BLOGC_RUNSERVER_HOST ?= 127.0.0.1
+BLOGC_RUNSERVER_PORT ?= 8080
 
 OUTPUT_DIR ?= wiredspace.de
 BASE_DOMAIN ?= https://wiredspace.de
@@ -69,14 +74,23 @@ PAGES_LIST = $(addprefix content/, $(addsuffix .txt, $(PAGES)))
 # wiki posts
 WIKI_LIST = $(addprefix content/wiki/, $(addsuffix .txt, $(WIKI_POSTS)))
 
+LAST_PAGE = $(shell $(BLOGC_COMMAND) \
+	-D FILTER_PAGE=1 \
+	-D FILTER_PER_PAGE=$(POSTS_PER_PAGE) \
+	-p LAST_PAGE \
+	-l \
+	$(POSTS_LIST))
+
 all: \
 	$(OUTPUT_DIR)/index.html \
 	$(OUTPUT_DIR)/privacy.html \
 	$(OUTPUT_DIR)/about.html \
 	$(OUTPUT_DIR)/wiki/index.html \
 	$(addprefix $(OUTPUT_DIR)/, $(ASSETS)) \
-	$(addprefix $(OUTPUT_DIR)/blog/, $(addsuffix .html, $(POSTS))) \
-	$(addprefix $(OUTPUT_DIR)/wiki/, $(addsuffix .html, $(WIKI_POSTS)))
+	$(addprefix $(OUTPUT_DIR)/wiki/, $(addsuffix .html, $(WIKI_POSTS))) \
+	$(addprefix $(OUTPUT_DIR)/blog/post/, $(addsuffix /index.html, $(POSTS))) \
+	$(addprefix $(OUTPUT_DIR)/blog/page/, $(addsuffix /index.html, \
+		$(shell for i in $(shell seq 1 $(LAST_PAGE)); do echo $$i; done)))
 
 $(OUTPUT_DIR)/assets/%: assets/% Makefile
 	$(MKDIR) -p $(dir $@) && \
@@ -111,13 +125,23 @@ $(OUTPUT_DIR)/wiki/index.html: templates/main.tmpl Makefile
 		-t templates/main.tmpl \
 		content/wiki/index.txt
 
-$(OUTPUT_DIR)/blog/%: $(POSTS_LIST) templates/main.tmpl Makefile
+$(OUTPUT_DIR)/blog/page/%/index.html: $(POSTS_LIST) templates/main.tmpl Makefile
+	$(BLOGC_COMMAND) \
+		-D DATE_FORMAT=$(DATE_FORMAT) \
+		-D FILTER_PAGE=$(shell echo $@ | sed -e 's,^$(OUTPUT_DIR)/blog/page/,,' -e 's,/index\.html$$,,') \
+		-D FILTER_PER_PAGE=$(POSTS_PER_PAGE) \
+		-D FILTER_REVERSE=1 \
+		-l \
+		-o $@ \
+		-t templates/main.tmpl \
+		$(POSTS_LIST)
+
+$(OUTPUT_DIR)/blog/post/%/index.html: content/blog/%.txt templates/main.tmpl Makefile
 	$(BLOGC_COMMAND) \
 		-D DATE_FORMAT=$(DATE_FORMAT) \
 		-o $@ \
-		-l \
 		-t templates/main.tmpl \
-		$(POSTS_LIST)
+		$<
 
 $(OUTPUT_DIR)/wiki/%: $(WIKI_LIST) templates/main.tmpl Makefile
 	$(BLOGC_COMMAND) \
@@ -128,5 +152,14 @@ $(OUTPUT_DIR)/wiki/%: $(WIKI_LIST) templates/main.tmpl Makefile
 
 clean:
 	rm -rf "$(OUTPUT_DIR)"
+
+ifneq ($(BLOGC_RUNSERVER),)
+.PHONY: serve
+serve: all
+		$(BLOGC_RUNSERVER) \
+		-t $(BLOGC_RUNSERVER_HOST) \
+		-p $(BLOGC_RUNSERVER_PORT) \
+		$(OUTPUT_DIR)
+endif
 
 .PHONY: all clean
