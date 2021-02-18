@@ -49,3 +49,7 @@ pre {
 	padding: 4px;
 }
 
+article {
+	width: 70%;
+	margin: auto;
+}
