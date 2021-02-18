@@ -9,6 +9,7 @@ POSTS_PER_PAGE = 1
 
 POSTS = \
 	blogc \
+	blogc_pagination \
 	$(NULL)
 
 WIKI_POSTS = \
