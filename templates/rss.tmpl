@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+	<channel>
+		<title>{{SITE_TITLE}}</title>
+		<link>{{BASE_DOMAIN}}/blog/blog.rss</link>
+		<description>Witcher's blog</description>
+		{% block listing %}
+		<item>
+			<title>{{TITLE}}</title>
+			<link>{{BASE_DOMAIN}}/blog/post/{{FILENAME}}</link>
+			<pubDate>{{DATE_FORMATTED}}</pubDate>
+		</item>
+		{% endblock %}
+	</channel>
+</rss>

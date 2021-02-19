@@ -6,6 +6,7 @@ SITE_TITLE = "wiredspace.de"
 LOCALE = "en_GB.utf-8"
 
 POSTS_PER_PAGE = 1
+POSTS_PER_PAGE_ATOM = 10
 
 POSTS = \
 	blogc \
@@ -54,6 +55,9 @@ BASE_URL ?= $(BASE_DOMAIN)
 
 # day month year, hours(12):minutes AM/PM timezone
 DATE_FORMAT = "%d %b %Y, %I:%M %p %Z"
+DATE_FORMAT_RFC822 = "%a, %d %b %y %T %z"
+
+RSS_FILE_LOCATION = "/blog/blog.rss"
 
 BLOGC_COMMAND = \
 	LC_ALL=$(LOCALE) \
@@ -87,6 +91,7 @@ all: \
 	$(OUTPUT_DIR)/privacy.html \
 	$(OUTPUT_DIR)/about.html \
 	$(OUTPUT_DIR)/wiki/index.html \
+	$(OUTPUT_DIR)/blog/blog.rss \
 	$(addprefix $(OUTPUT_DIR)/, $(ASSETS)) \
 	$(addprefix $(OUTPUT_DIR)/wiki/, $(addsuffix .html, $(WIKI_POSTS))) \
 	$(addprefix $(OUTPUT_DIR)/blog/post/, $(addsuffix /index.html, $(POSTS))) \
@@ -145,6 +150,16 @@ $(OUTPUT_DIR)/blog/post/%/index.html: content/blog/%.txt templates/main.tmpl Mak
 		-o $@ \
 		-t templates/main.tmpl \
 		$<
+
+$(OUTPUT_DIR)/blog/blog.rss: $(POSTS_LIST) templates/rss.tmpl Makefile
+	$(BLOGC_COMMAND) \
+		-D DATE_FORMAT=$(DATE_FORMAT_RFC822) \
+		-D FILTER_PAGE=1 \
+		-D FILTER_PER_PAGE=$(POSTS_PER_PAGE_ATOM) \
+		-l \
+		-o $@ \
+		-t templates/rss.tmpl \
+		$(POSTS_LIST)
 
 $(OUTPUT_DIR)/wiki/%: $(WIKI_LIST) templates/main.tmpl Makefile
 	$(BLOGC_COMMAND) \
