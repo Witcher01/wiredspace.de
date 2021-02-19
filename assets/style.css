@@ -29,13 +29,13 @@ main {
 }
 
 footer {
-	padding: 10px 20px;
+	padding: 0px 2px;
 	border-top: solid 1px;
 }
 
 a {
-color: #ff8951;
-text-decoration: none;
+	color: #ff8951;
+	text-decoration: none;
 }
 
 code {
