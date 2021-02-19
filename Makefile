@@ -139,6 +139,7 @@ $(OUTPUT_DIR)/blog/page/%/index.html: $(POSTS_LIST) templates/main.tmpl Makefile
 		-D FILTER_PER_PAGE=$(POSTS_PER_PAGE) \
 		-D FILTER_REVERSE=1 \
 		-D IS_POST=1 \
+		-D LAST_PAGE=$(LAST_PAGE) \
 		-l \
 		-o $@ \
 		-t templates/main.tmpl \
@@ -148,6 +149,7 @@ $(OUTPUT_DIR)/blog/post/%/index.html: content/blog/%.txt templates/main.tmpl Mak
 	$(BLOGC_COMMAND) \
 		-D DATE_FORMAT=$(DATE_FORMAT) \
 		-D IS_POST=1 \
+		-D LAST_PAGE=$(LAST_PAGE) \
 		-o $@ \
 		-t templates/main.tmpl \
 		$<

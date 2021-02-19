@@ -72,12 +72,18 @@
 			<ul>
 				{% ifdef PREVIOUS_PAGE %}
 				<li>
+					<a href="/blog/page/1/">First</a>
+				</li>
+				<li>
 					<a href="/blog/page/{{PREVIOUS_PAGE}}/">&larr; Newer</a>
 				</li>
 				{% endif %}
 				{% ifdef NEXT_PAGE %}
 				<li>
 					<a href="/blog/page/{{NEXT_PAGE}}/">Older &rarr;</a>
+				</li>
+				<li>
+					<a href="/blog/page/{{LAST_PAGE}}/">Last</a>
 				</li>
 				{% endif %}
 			</ul>
