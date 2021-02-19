@@ -132,6 +132,7 @@ $(OUTPUT_DIR)/blog/page/%/index.html: $(POSTS_LIST) templates/main.tmpl Makefile
 		-D FILTER_PAGE=$(shell echo $@ | sed -e 's,^$(OUTPUT_DIR)/blog/page/,,' -e 's,/index\.html$$,,') \
 		-D FILTER_PER_PAGE=$(POSTS_PER_PAGE) \
 		-D FILTER_REVERSE=1 \
+		-D IS_POST=1 \
 		-l \
 		-o $@ \
 		-t templates/main.tmpl \
@@ -140,6 +141,7 @@ $(OUTPUT_DIR)/blog/page/%/index.html: $(POSTS_LIST) templates/main.tmpl Makefile
 $(OUTPUT_DIR)/blog/post/%/index.html: content/blog/%.txt templates/main.tmpl Makefile
 	$(BLOGC_COMMAND) \
 		-D DATE_FORMAT=$(DATE_FORMAT) \
+		-D IS_POST=1 \
 		-o $@ \
 		-t templates/main.tmpl \
 		$<
