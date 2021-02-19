@@ -57,7 +57,7 @@ BASE_URL ?= $(BASE_DOMAIN)
 DATE_FORMAT = "%d %b %Y, %I:%M %p %Z"
 DATE_FORMAT_RFC822 = "%a, %d %b %y %T %z"
 
-RSS_FILE_LOCATION = "/blog/blog.rss"
+RSS_FILE_LOCATION = "blog/blog.rss"
 
 BLOGC_COMMAND = \
 	LC_ALL=$(LOCALE) \
@@ -67,6 +67,7 @@ BLOGC_COMMAND = \
 		-D SITE_TITLE=$(SITE_TITLE) \
 		-D BASE_DOMAIN=$(BASE_DOMAIN) \
 		-D BASE_URL=$(BASE_URL) \
+		-D RSS_FILE_LOCATION=$(RSS_FILE_LOCATION) \
 	$(NULL)
 
 
