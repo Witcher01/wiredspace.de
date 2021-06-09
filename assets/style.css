@@ -1,16 +1,19 @@
 @import "bulma/css/bulma.css";
 
+:root {
+	/* complementary colors */
+	--jet: #363636; /* bulma's "has-background-dark" */
+	--cedar-chest: #D5573B;
+	--deep-champagne: #FBD1A2;
+	--beau-blue: #BFDBF7;
+	--amethyst: #8B5FBF;
+}
 
 header {
 	border-bottom: solid 1px;
 }
 
-main {
-	margin: 20px;
-}
-
 footer {
-	padding: 0px 2px;
 	border-top: solid 1px;
 }
 
@@ -19,12 +22,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-	color: #D5573B !important;
+	color: var(--cedar-chest) !important;
 	text-decoration: none;
 }
 
 code {
-	background-color: rgba(0, 0, 0, 0.1);
+	color: var(--amethyst);
+	background-color: whitesmoke; /* bulma's pre > code color */
 	padding: 1px 5px;
 }
 
