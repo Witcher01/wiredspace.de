@@ -53,20 +53,22 @@
 			</article>
 			{% endblock %}
 			{% block entry %}
-			{% ifdef IS_POST %}
-			<h2><a href="{{ BASE_URL }}/blog/post/{{FILENAME}}/">{{TITLE}}</a></h2>
-			{% endif %}
-
-			{{CONTENT}}
-
-			{% ifdef IS_POST %}
-			<div>
-				{% ifdef DATE_FORMATTED %}
-				Posted on: {{DATE_FORMATTED}}<br/>
-				<a href="{{ BASE_URL }}/blog/post/{{FILENAME}}/">Permanent link</a>
+			<article>
+				{% ifdef IS_POST %}
+				<h2><a href="{{ BASE_URL }}/blog/post/{{FILENAME}}/">{{TITLE}}</a></h2>
 				{% endif %}
-			</div>
-			{% endif %}
+
+				{{CONTENT}}
+
+				{% ifdef IS_POST %}
+				<div>
+					{% ifdef DATE_FORMATTED %}
+					Posted on: {{DATE_FORMATTED}}<br/>
+					<a href="{{ BASE_URL }}/blog/post/{{FILENAME}}/">Permanent link</a>
+					{% endif %}
+				</div>
+				{% endif %}
+			</article>
 			{% endblock %}
 			{% block listing_once %}
 			<ul>

@@ -11,6 +11,7 @@ POSTS_PER_PAGE_ATOM = 10
 POSTS = \
 	blogc \
 	blogc_pagination \
+	discord_go_bot \
 	$(NULL)
 
 WIKI_POSTS = \
