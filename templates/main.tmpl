@@ -1,29 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-navbar-fixed-top has-background-dark">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<link rel="stylesheet" href="{{ BASE_URL }}/assets/style.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="/assets/style.css" type="text/css" media="screen" charset="utf-8">
 
-		<link rel="shortcut icon" href="{{ BASE_URL }}/images/favicon.ico">
+		<link rel="shortcut icon" href="/images/favicon.ico">
 
 		<title>
 			{{ SITE_TITLE }}{% block entry %}{% ifdef TITLE %} - {{ TITLE }}{% endif %}{% endblock %}
 		</title>
 	</head>
 
-	<body>
+	<body class="has-background-dark has-text-light">
 		<header>
-			<nav>
-				<ul id="navigation-list">
-					<li><a href="{{ BASE_URL }}/index.html">Home</a></li>
-					<li><a href="{{ BASE_URL }}/blog/page/1/">Blog</a></li>
-					<li><a href="{{ BASE_URL }}/wiki/index.html">Wiki</a></li>
-					<li><a href="https://bin.wiredspace.de/" target="_blank">PrivateBin</a></li>
-					<li><a href="{{ BASE_URL }}/about.html">About</a></li>
-					<li><a href="https://concealed.world/Other/lainchanwebring.php">Webring</a></li>
-				</ul>
+			<nav class="navbar is-fixed-top is-dark" role="navigation">
+				<div class="navbar-menu is-active">
+					<div class="navbar-start">
+						<div class="navbar-item">
+							<a class="navbar-item" href="/index.html">Home</a>
+						</div>
+
+						<div class="navbar-item">
+							<a class="navbar-item" href="/blog/page/1/">Blog</a>
+						</div>
+
+						<div class="navbar-item">
+							<a class="navbar-item" href="/wiki/index.html">Wiki</a>
+						</div>
+
+						<div class="navbar-item">
+							<a class="navbar-item" href="https://bin.wiredspace.de/" target="_blank">PrivateBin</a>
+						</div>
+
+						<div class="navbar-item">
+							<a class="navbar-item" href="/about.html">About</a>
+						</div>
+
+						<div class="navbar-item">
+							<a class="navbar-item" href="https://concealed.world/Other/lainchanwebring.php">Webring</a>
+						</div>
+					</div>
+				</div>
 			</nav>
 		</header>
 
@@ -35,68 +54,75 @@
 			No blog entries available
 			{% endblock %}
 			{% block listing %}
-			<article>
+			<article class="content">
 				{% ifdef IS_POST %}
-				<h2><a href="{{ BASE_URL }}/blog/post/{{FILENAME}}/">{{TITLE}}</a></h2>
+				<h2 class="title"><a href="/blog/post/{{FILENAME}}/">{{TITLE}}</a></h2>
 				{% endif %}
 
 				{{CONTENT}}
 
 				{% ifdef IS_POST %}
-				<div>
-					{% ifdef DATE_FORMATTED %}
-					Posted on: {{DATE_FORMATTED}}<br/>
-					<a href="{{ BASE_URL }}/blog/post/{{FILENAME}}/">Permanent link</a>
-					{% endif %}
+				<div class="card">
+					<div class="card-content">
+						<div class="content">
+							{% ifdef DATE_FORMATTED %}
+							Posted on: {{DATE_FORMATTED}}<br/>
+							<a href="/blog/post/{{FILENAME}}/">Permanent link</a>
+							{% endif %}
+						</div>
+					</div>
 				</div>
 				{% endif %}
 			</article>
 			{% endblock %}
 			{% block entry %}
-			<article>
+			<article class="content">
 				{% ifdef IS_POST %}
-				<h2><a href="{{ BASE_URL }}/blog/post/{{FILENAME}}/">{{TITLE}}</a></h2>
+				<h2 class="title"><a href="/blog/post/{{FILENAME}}/">{{TITLE}}</a></h2>
 				{% endif %}
 
 				{{CONTENT}}
 
 				{% ifdef IS_POST %}
-				<div>
-					{% ifdef DATE_FORMATTED %}
-					Posted on: {{DATE_FORMATTED}}<br/>
-					<a href="{{ BASE_URL }}/blog/post/{{FILENAME}}/">Permanent link</a>
-					{% endif %}
+				<div class="card">
+					<div class="card-content">
+						<div class="content">
+							{% ifdef DATE_FORMATTED %}
+							Posted on: {{DATE_FORMATTED}}<br/>
+							<a href="/blog/post/{{FILENAME}}/">Permanent link</a>
+							{% endif %}
+						</div>
+					</div>
 				</div>
 				{% endif %}
 			</article>
 			{% endblock %}
 			{% block listing_once %}
-			<ul>
-				{% ifdef PREVIOUS_PAGE %}
-				<li>
-					<a href="/blog/page/1/">&uarr; First</a>
-				</li>
-				<li>
-					<a href="/blog/page/{{PREVIOUS_PAGE}}/">&larr; Newer</a>
-				</li>
-				{% endif %}
-				{% ifdef NEXT_PAGE %}
-				<li>
-					<a href="/blog/page/{{NEXT_PAGE}}/">&rarr; Older</a>
-				</li>
-				<li>
-					<a href="/blog/page/{{LAST_PAGE}}/">&darr; Last</a>
-				</li>
-				{% endif %}
-			</ul>
+			<nav class="pagination is-centered is-rounded">
+				<ul class="pagination-list">
+					{% ifdef PREVIOUS_PAGE %}
+					<li>
+						<a class="pagination-link" href="/blog/page/1/">&uarr; First</a>
+					</li>
+					<li>
+						<a class="pagination-previous" href="/blog/page/{{PREVIOUS_PAGE}}/">&larr; Newer</a>
+					</li>
+					{% endif %}
+					{% ifdef NEXT_PAGE %}
+					<li>
+						<a class="pagination-next" href="/blog/page/{{NEXT_PAGE}}/">&rarr; Older</a>
+					</li>
+					<li>
+						<a class="pagination-link" href="/blog/page/{{LAST_PAGE}}/">&darr; Last</a>
+					</li>
+					{% endif %}
+				</ul>
+			</nav>
 			{% endblock %}
 		</main>
 
-		<footer>
-			<ul id="navigation-list">
-				<li><a href="{{BASE_URL}}/privacy.html">Privacy Policy</a></li>
-				<li><a href="{{BASE_URL}}/{{RSS_FILE_LOCATION}}">RSS Feed</a></li>
-			</ul>
+		<footer class="footer has-background-dark has-text-light">
+			<a href="/privacy.html">Privacy Policy</a> | <a href="/{{RSS_FILE_LOCATION}}">RSS Feed</a>
 		</footer>
 	</body>
 </html>

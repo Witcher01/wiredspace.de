@@ -37,6 +37,7 @@ PAGES = \
 
 ASSETS = \
 	assets/style.css \
+	assets/bulma/css/bulma.css \
 	$(NULL)
 
 

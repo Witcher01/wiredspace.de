@@ -1,27 +1,8 @@
-body {
-	background-color: #282828;
-	font-family: courier,monospace;
-	color: #C9C6AF;
-}
+@import "bulma/css/bulma.css";
+
 
 header {
-	font-size: 17px;
 	border-bottom: solid 1px;
-	padding: 0 2px;
-}
-
-#navigation-list {
-	display: inline-block;
-}
-
-#navigation-list > li {
-	display: block;
-	float: left;
-}
-
-#navigation-list > li > a {
-	display: block;
-	padding: 0 10px;
 }
 
 main {
@@ -33,8 +14,12 @@ footer {
 	border-top: solid 1px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+	color: white !important;
+}
+
 a {
-	color: #ff8951;
+	color: #ff8951 !important;
 	text-decoration: none;
 }
 
