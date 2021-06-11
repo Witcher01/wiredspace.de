@@ -7,6 +7,7 @@ layout: default
 
 	{{ content }}
 
+	{% if page.date %}
 	<div class="card">
 		<div class="card-content">
 			<div class="content">
@@ -14,4 +15,5 @@ layout: default
 			</div>
 		</div>
 	</div>
+	{% endif %}
 </article>
