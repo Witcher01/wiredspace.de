@@ -1,0 +1,12 @@
+- name: Home
+  link: /
+- name: Blog
+  link: /blog.html
+- name: Wiki
+  link: /wiki.html
+- name: PrivateBin
+  link: https://bin.wiredspace.de/
+- name: About
+  link: /about.html
+- name: Webring
+  link: https://concealed.world/Other/lainchanwebring.php

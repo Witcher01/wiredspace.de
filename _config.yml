@@ -1,0 +1,19 @@
+collections:
+    wiki:
+        output: true
+
+defaults:
+    - scope:
+        path: ""
+        type: "posts"
+        values:
+            layout: "post"
+    - scope:
+        path: ""
+        type: "wiki"
+        values:
+            layout: "post"
+    - scope:
+        path: ""
+        values:
+            layout: "default"

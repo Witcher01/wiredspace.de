@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" class="has-navbar-fixed-top has-background-dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link rel="stylesheet" href="/assets/css/style.css" type="text/css" media="screen" charset="utf-8">
+
+		<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+		<title>
+			{{ page.title }}
+		</title>
+	</head>
+
+	<body class="has-background-dark has-text-light">
+		<header>
+			{% include header.html %}
+		</header>
+
+		<main class="m-4">
+			<noscript>
+				Welcome, human!
+			</noscript>
+			<div class="content">
+				{{ content }}
+			</div>
+		</main>
+
+		<footer class="footer has-background-dark has-text-light">
+			{% include footer.html %}
+		</footer>
+	</body>
+</html>
