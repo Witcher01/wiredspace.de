@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: wiki
 title: eclim
 description: eclim, a headless eclipse instance for vim
 ---

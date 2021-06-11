@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: wiki
 title: Viewing Man Pages in Vim
 description: viewing man pages in vim
 ---

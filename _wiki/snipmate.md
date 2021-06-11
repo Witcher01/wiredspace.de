@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: wiki
 title: snipmate
 description: a snip manager for vim
 ---

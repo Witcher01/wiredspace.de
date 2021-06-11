@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: wiki
 title: Relative Line Numbers
 description: how to view relative line numbers in vim
 ---

@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: wiki
 title: offlineimap
 description: how my imap syncing setup works
 ---

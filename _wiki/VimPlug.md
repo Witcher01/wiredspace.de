@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: wiki
 title: vim-plug
 description: the plugin manager i currently use to manage my vim plugins
 ---

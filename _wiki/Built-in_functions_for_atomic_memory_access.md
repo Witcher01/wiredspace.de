@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: wiki
 title: Built-in functions for atomic memory access
 ---
 

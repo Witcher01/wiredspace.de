@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: wiki
 title: Setting up mbsync
 date: 2020-12-22 22:24:00
 description: actively developed alternative to offlineimap

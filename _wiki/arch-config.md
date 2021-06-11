@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: wiki
 title: arch-config
 description: my arch linux installation setup
 ---
