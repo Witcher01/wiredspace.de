@@ -105,4 +105,4 @@ To tell neomutt where to look for files, add this to your `neomuttrc` (or anothe
 	set record = "+{account1}/Sent\ Items"
 	set postponed = "+{account1}/Drafts"
 
-You should be all set now to browser your local mail repository with neomutt.
+You should be all set now to browse your local mail repository with neomutt.
