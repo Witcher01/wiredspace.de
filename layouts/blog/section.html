@@ -1,0 +1,48 @@
+{{ define "main" }}
+	{{ .Content }}
+
+	{{ $paginator := .Paginator }}
+	{{ range $paginator.Pages }}
+	<div style="background: var(--deep-champagne);" class="box mx-6">
+		<h3 class="title">
+			<a href="{{ .Permalink }}">{{ .Title }}</a>
+		</h3>
+		<div class="content has-text-black">
+			{{ .Summary }}
+		</div>
+	</div>
+	{{ end }}
+
+	<nav class="pagination" role="navigation">
+		<ul class="pagination-list">
+			{{ range $paginator.Pagers }}
+				<li>
+					<a class="pagination-link {{ if eq . $paginator }} is-current {{ end }}" href="{{ .URL }}">{{ .PageNumber }}</a>
+				</li>
+			{{ end }}
+		</ul>
+
+		<a
+			{{ if $paginator.HasPrev }}
+				href="{{ $paginator.Prev.URL }}"
+			{{ end }}
+			class="pagination-previous"
+			{{ if not $paginator.HasPrev }}
+				disabled
+			{{ end }}
+		>
+				Previous
+		</a>
+		<a
+			{{ if $paginator.HasNext }}
+				href="{{ $paginator.Next.URL }}"
+			{{ end }}
+			class="pagination-next"
+			{{ if not $paginator.HasNext }}
+				disabled
+			{{ end }}
+		>
+			Next
+		</a>
+	</nav>
+{{ end }}

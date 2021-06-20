@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Writing a Discord bot in Go
+date: 2021-06-08
 ---
 
 About a month ago I decided to get into Go a bit. It's always kind of been an interesting programming language since it's modern, simple and has quite powerful multi-threading capabilities, most of which I have yet to use. I was asked if I could program a Discord bot that would print the weekly Covid-19 incidence numbers in Germany and I thought that's a great idea, so here we are.

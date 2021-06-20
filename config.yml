@@ -1,6 +1,7 @@
 baseUrl: "https://wiredspace.de/"
 languageCode: "en-us"
 title: "wiredspace.de"
+paginate: 1
 
 menu:
     main:

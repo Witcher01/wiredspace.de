@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Blog pagination support in blogc
+date: 2021-02-18
 ---
 
 After taking quite a break on working on my website I decided to finally add pagination support for the blog on my website, which you are currently reading.  

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Static Site Generation with blogc
+date: 2020-12-21
 ---
 
 # Introduction
