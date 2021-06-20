@@ -7,18 +7,20 @@ menu:
         - name: Home
           identifier: home
           url: /
+          weight: -100
         - name: Blog
           identifier: blog
-          url: /blog.html
+          url: /blog/
+          weight: -90
         - name: Wiki
           identifier: wiki
-          url: /wiki.html
+          url: /wiki/
+          weight: -80
         - name: PrivateBin
           identifier: privatebin
           url: https://bin.wiredspace.de/
+          weight: -70
         - name: About
           identifier: about
-          url: /about.html
-        - name: Webring
-          identifier: webring
-          url: https://concealed.world/Other/lainchanwebring.php
+          url: /about/
+          weight: -60
