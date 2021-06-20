@@ -1,0 +1,17 @@
+<nav class="navbar is-fixed-top is-dark" role="navigation">
+	<div class="navbar-brand">
+	</div>
+
+	<div id="basic-navbar" class="navbar-menu">
+		<div class="navbar-start">
+			{{ range .Site.Menus.main }}
+				<a class="navbar-item" href="{{ .URL }}">
+					{{ .Name }}
+				</a>
+			{{ end }}
+			<a href="https://concealed.world/Other/lainchanwebring.php" class="navbar-item">
+				Webring
+			</a>
+		</div>
+	</div>
+</nav>

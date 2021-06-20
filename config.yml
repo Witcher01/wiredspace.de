@@ -1,0 +1,24 @@
+baseUrl: "https://wiredspace.de/"
+languageCode: "en-us"
+title: "wiredspace.de"
+
+menu:
+    main:
+        - name: Home
+          identifier: home
+          url: /
+        - name: Blog
+          identifier: blog
+          url: /blog.html
+        - name: Wiki
+          identifier: wiki
+          url: /wiki.html
+        - name: PrivateBin
+          identifier: privatebin
+          url: https://bin.wiredspace.de/
+        - name: About
+          identifier: about
+          url: /about.html
+        - name: Webring
+          identifier: webring
+          url: https://concealed.world/Other/lainchanwebring.php

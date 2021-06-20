@@ -4,18 +4,22 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<link rel="stylesheet" href="/assets/css/style.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" charset="utf-8">
 
-		<link rel="shortcut icon" href="/assets/images/favicon.ico">
+		<link rel="shortcut icon" href="/images/favicon.ico">
 
+		{{ block "title" . }}
 		<title>
-			{{ page.title }}
+			{{ .Title }}
 		</title>
+		{{ end }}
 	</head>
 
 	<body class="has-background-dark has-text-light">
 		<header>
-			{% include header.html %}
+			{{ block "header" . }}
+			{{ partial "header.html" . }}
+			{{ end }}
 		</header>
 
 		<main class="m-4">
@@ -23,12 +27,15 @@
 				Welcome, human!
 			</noscript>
 			<div class="content">
-				{{ content }}
+				{{ block "main" . }}
+				{{ end }}
 			</div>
 		</main>
 
 		<footer class="footer has-background-dark has-text-light">
-			{% include footer.html %}
+			{{ block "footer" . }}
+			{{ partial "footer.html" . }}
+			{{ end }}
 		</footer>
 	</body>
 </html>
